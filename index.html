@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatyni V2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+
+    <div id="sidebar-overlay"></div>
+
+    <div id="initial-view">
+        <div class="main-content" id="mainContent">
+            <h1 class="rgb-text">Bem vindo ao Chatyni V2</h1>
+            <button id="startButton" class="rgb-button">Iniciar</button>
+        </div>
+    </div> 
+
+    <div id="progressContainer" class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div id="connection-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Desconectado</span>
+    </div>
+
+    <nav id="sidebar" class="sidebar">
+        <ul>
+            <li id="nav-login"><a href="javascript:void(0);" data-target="loginContent"><span class="icon">👤</span><span class="text" data-translate-key="navLogin">Login / Cadastrar</span></a></li>
+            <li id="nav-chat"><a href="javascript:void(0);" data-target="chatContent"><span class="icon">💬</span><span class="text">Chat Global</span></a></li>
+            <li id="nav-story"><a href="javascript:void(0);" data-target="storyContent"><span class="icon">📖</span><span class="text" data-translate-key="navStory">História</span></a></li>
+            <li><a href="#"><span class="icon">📜</span><span class="text">Script</span></a></li>
+            <li><a href="#"><span class="icon">🏆</span><span class="text">Créditos</span></a></li>
+            <li><a href="#"><span class="icon">🚀</span><span class="text">Executores</span></a></li>
+            <li id="nav-settings" class="hidden"><a href="javascript:void(0);" data-target="settingsContent"><span class="icon">🔧</span><span class="text" data-translate-key="navSettings">Configurações</span></a></li>
+            <li id="nav-logout" class="hidden"><a href="javascript:void(0);" data-action="logout"><span class="icon">🚪</span><span class="text" data-translate-key="navLogout">Logout</span></a></li>
+            <li id="nav-admin" class="hidden"><a href="javascript:void(0);" data-target="adminContent"><span class="icon">🛡️</span><span class="text" data-translate-key="navAdmin">Painel Admin</span></a></li>
+            <li id="nav-tester" class="hidden"><a href="javascript:void(0);" data-target="testerContent"><span class="icon">🧪</span><span class="text">Painel Tester</span></a></li>
+        </ul>
+
+    </nav>
+
+    <main id="content-area"> <!-- Este é o container principal para todos os painéis -->
+        <!-- Painel de Login/Cadastro -->
+        <div id="loginContent" class="content-panel">
+            <!-- Formulário de Login -->
+            <form id="loginForm" class="auth-form show">
+                <h1>Login</h1>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Senha" required>
+                <button type="submit" class="rgb-button">Entrar</button>
+                <p>Não tem uma conta? <a href="javascript:void(0);" id="showSignup">Cadastre-se</a> | <a href="javascript:void(0);" id="showRecover">Recuperar conta</a></p>
+            </form>
+            <!-- Formulário de Cadastro -->
+            <form id="signupForm" class="auth-form">
+                <h1>Cadastro</h1>
+                <input type="text" id="signupUsername" placeholder="Nome de usuário" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Senha" required>
+                <button type="submit" class="rgb-button">Criar Conta</button>
+                <p>Já tem uma conta? <a href="javascript:void(0);" id="showLogin">Faça login</a></p>
+            </form>
+        </div>
+
+        <!-- Painel de Boas-Vindas (Logado) -->
+        <div id="welcomeContent" class="content-panel">
+            <h1>Bem vindo, <span id="welcomeUsername" class="rgb-highlight"></span></h1>
+        </div>
+
+        <!-- Painel da História -->
+        <div id="storyContent" class="content-panel">
+            <h1>A Remasterização do Chatyni</h1>
+            <p>
+                A jornada para o Chatyni V2 começou nas <span class="rgb-highlight">cinzas do seu antecessor</span>, o V1.
+                Nascido como um simples experimento, o Chatyni V1 provou que a ideia tinha potencial.
+                No entanto, ele era um reflexo de sua própria criação apressada: <span class="rgb-highlight">lento, com uma interface datada</span> e funcionalidades limitadas.
+                A comunidade, embora pequena, via o que ele poderia se tornar e suas vozes foram o <span class="rgb-highlight">catalisador para a mudança</span>.
+                Não bastava apenas aplicar um curativo; uma simples atualização não corrigiria as falhas fundamentais em sua arquitetura.
+                A decisão foi tomada: uma <span class="rgb-highlight">remasterização completa, do zero</span>.
+                O objetivo era claro: criar uma plataforma que não fosse apenas funcional, mas também uma <span class="rgb-highlight">alegria de usar</span>.
+                Velocidade, fluidez e um design moderno tornaram-se os pilares do novo projeto.
+                Noites foram gastas reescrevendo cada linha de código, otimizando o motor de renderização para as <span class="rgb-highlight">animações suaves que você vê hoje</span>.
+                O antigo sistema foi descartado em favor de uma base modular, permitindo a fácil integração de scripts e executores.
+                A interface escura, o fundo animado e os efeitos RGB não são apenas enfeites.
+                Eles representam a nova filosofia do Chatyni: uma <span class="rgb-highlight">ferramenta poderosa que também é esteticamente agradável</span>.
+                Cada transição, cada gradiente, foi pensado para criar uma experiência imersiva.
+                A barra de progresso que você viu não simboliza apenas um carregamento.
+                Ela representa a <span class="rgb-highlight">transição do velho para o novo</span>, o progresso que foi feito.
+                A introdução do menu lateral e a separação da interface principal foram passos cruciais.
+                Isso abriu caminho para um futuro onde novas funcionalidades podem ser adicionadas sem comprometer a estabilidade.
+                O Chatyni V2 é, portanto, mais do que uma sequência.
+                É uma <span class="rgb-highlight">reimaginação, uma promessa cumprida</span> àqueles que acreditaram no potencial inicial.
+                É a fundação sobre a qual construiremos o futuro, juntos.
+                Bem-vindo à <span class="rgb-highlight">nova era</span>.
+            </p>
+        </div>
+
+        <!-- Painel de Configurações -->
+        <div id="settingsContent" class="content-panel">
+            <h1>Configurações</h1>
+
+            <div class="settings-container">
+                <div class="settings-tabs">
+                    <button class="settings-tab-btn active" data-tab="profile">Perfil</button>
+                    <button class="settings-tab-btn" data-tab="security">Segurança</button>
+                    <button class="settings-tab-btn" data-tab="appearance">Aparência</button>
+                </div>
+
+                <!-- Aba de Perfil -->
+                <div class="settings-tab-content active" id="tab-profile">
+                    <div class="profile-pic-container">
+                        <img src="https://via.placeholder.com/120" alt="Foto de Perfil" id="profilePic">
+                        <input type="file" id="profilePicInput" class="hidden" accept="image/*">
+                        <button class="change-pic-btn" title="Alterar foto" data-translate-key="settingsProfileChange"></button>
+                    </div>
+                    <div class="setting-group">
+                        <label for="username-change">Nome de Usuário</label>
+                        <div class="input-with-button">
+                            <input type="text" id="username-change" placeholder="Seu nome aqui">
+                            <button id="saveUsernameBtn" class="setting-save-btn">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aba de Segurança -->
+                <div class="settings-tab-content" id="tab-security">
+                    <div class="setting-group">
+                        <label>Alterar Senha</label>
+                        <input type="password" id="currentPassword" placeholder="Senha atual">
+                        <input type="password" id="newPassword" placeholder="Nova senha">
+                        <input type="password" id="confirmNewPassword" placeholder="Confirmar nova senha">
+                        <button id="savePasswordBtn" class="setting-save-btn full-width">Salvar Nova Senha</button>
+                    </div>
+                </div>
+
+                <!-- Aba de Aparência -->
+                <div class="settings-tab-content" id="tab-appearance">
+                    <div class="setting-group">
+                        <label>Tema e Idioma</label>
+                        <div class="setting-item">
+                            <label for="themeToggle" data-translate-key="settingsTheme">Modo Escuro</label>
+                            <label class="switch"><input type="checkbox" id="themeToggle"><span class="slider round"></span></label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="languageSelector" data-translate-key="settingsLanguage">Idioma</label>
+                            <select id="languageSelector"><option value="pt">Português</option><option value="en">English</option></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel de Recuperação de Conta -->
+        <div id="recoverContent" class="content-panel">
+            <form id="recoverForm" class="auth-form show">
+                <h1>Recuperar Conta</h1>
+                <p class="recover-text">Insira seu email para receber as instruções de recuperação.</p>
+                <input type="email" placeholder="Email" required>
+                <button type="submit" class="rgb-button">Enviar</button>
+                <p><a href="javascript:void(0);" id="backToLogin">Voltar para o login</a></p>
+            </form>
+        </div>
+
+        <!-- Painel do Chat Global -->
+        <div id="chatContent" class="content-panel">
+            <!-- Formulário para inserir nome do Roblox -->
+            <div id="roblox-login-view">
+                <form id="robloxUsernameForm" class="auth-form show">
+                    <h1>Entrar no Chat Global</h1>
+                    <p>Digite seu nome de usuário do Roblox para usar seu avatar como foto de perfil.</p>
+                    <input type="text" id="robloxUsernameInput" placeholder="Nome de usuário do Roblox" required>
+                    <button type="submit" class="rgb-button">Buscar e Entrar</button>
+                </form>
+            </div>
+            <!-- Visualização do Chat -->
+            <div id="chat-view" class="hidden">
+                <h1>Chat Global</h1>
+                <div id="chat-messages"></div>
+                <form id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." autocomplete="off" required>
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Painel de Admin -->
+        <div id="adminContent" class="content-panel">
+            <h1>Painel de Administração</h1>
+            <p>Gerenciamento de usuários do sistema.</p>
+            <div class="admin-panel-layout">
+                <div class="user-list-container">
+                    <h2>Lista de Usuários</h2>
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>IP</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- Os usuários registrados serão inseridos aqui pelo JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ip-ban-container">
+                    <h2>Gerenciamento de IP</h2>
+                    <form id="ipBanForm">
+                        <input type="text" id="ipBanInput" placeholder="Digite o IP para banir/desbanir" required>
+                        <button type="submit" class="admin-btn ban">Banir/Desbanir IP</button>
+                    </form>
+                    <h3>IPs Banidos Atualmente:</h3>
+                    <ul id="bannedIpList">
+                        <!-- Lista será preenchida por JS -->
+                    </ul>
+                </div>
+            </div>
+            <div class="admin-actions-extra">
+                <button id="impersonateTesterBtn" class="admin-btn promote">Entrar na conta Tester</button>
+            </div>
+        </div>
+
+        <!-- Painel de Banimento -->
+        <div id="bannedContent" class="content-panel">
+            <div class="auth-form show">
+                <h1>Você Foi Banido</h1>
+                <p>Sua conta foi suspensa.</p>
+                <div class="ban-details">
+                    <p><strong>Banido por:</strong> <span id="bannedBy"></span></p>
+                    <p><strong>Motivo:</strong> <span id="banReason"></span></p>
+                    <p><strong>O ban expira em:</strong> <span id="banExpires"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel Tester -->
+        <div id="testerContent" class="content-panel">
+            <form id="sendImageForm" class="auth-form show">
+                <h1>Painel Tester</h1>
+                <p>Ferramentas especiais para testers.</p>
+                <label for="imageUrlInput">Enviar Imagem no Chat Global</label>
+                <input type="url" id="imageUrlInput" placeholder="https://exemplo.com/imagem.png" required>
+                <button type="submit" class="rgb-button">Enviar Imagem</button>
+            </form>
+            <form id="kickUserForm" class="auth-form show" style="margin-top: 20px;">
+                <h1>Ferramentas de Moderação</h1>
+                <label for="kickIpInput">Kickar Usuário por IP (em tempo real)</label>
+                <input type="text" id="kickIpInput" placeholder="127.0.0.1" required>
+                <button type="submit" class="rgb-button">Kickar Usuário</button>
+            </form>
+        </div>
+
+        <!-- Painel de Desbanimento/Reativação -->
+        <div id="unbannedContent" class="content-panel">
+            <div class="auth-form show">
+                <h1>Você foi Desbanido!</h1>
+                <p>Sua conta está pronta para ser reativada.</p>
+                <button id="reactivateAccountBtn" class="rgb-button">Clique aqui para reativar sua conta</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Genérico -->
+    <div id="modal-overlay" class="hidden">
+        <div id="modal-container">
+            <h2 id="modal-title"></h2>
+            <div id="modal-content"></div>
+            <div id="modal-actions">
+                <button id="modal-cancel-btn" class="modal-btn">Cancelar</button>
+                <button id="modal-confirm-btn" class="modal-btn primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="client.js" defer></script>
+
+</body>
+</html>
